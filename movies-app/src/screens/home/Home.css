@@ -1,0 +1,28 @@
+.heading {
+  background-color: #ff9999;
+  padding: 8px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.grid-titlebar {
+  background-color: #ffffff;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.left {
+  width: 76vw;
+  margin: 16px;
+}
+
+.right {
+  width: 24vw;
+  margin: 16px;
+}
+
+.movie-tile:hover {
+  cursor: pointer;
+}
