@@ -26,3 +26,25 @@
 .movie-tile:hover {
   cursor: pointer;
 }
+
+.apply-btn {
+  width: 100%;
+}
+
+.grid-root {
+  display: "flex";
+  flex-wrap: "wrap";
+  justify-content: "space-between";
+  overflow: "default";
+}
+
+.card-root {
+  min-width: 240;
+  max-width: 240;
+  display: "flex";
+  flex-direction: "column";
+  justify-content: "center";
+}
+
+.card-heading {
+}
