@@ -2,10 +2,27 @@ import React from 'react';
 import './Home.css';
 import Header from '../../common/header/Header';
 import moviesData from '../../common/moviesData';
+import genres from '../../common/genre';
+import artists from '../../common/artists';
 import { makeStyles } from '@material-ui/core/styles';
+import { FormControl } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';  
+import InputLabel from '@material-ui/core/InputLabel';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,6 +56,122 @@ const useStyles = makeStyles((theme) => ({
         'rgba(0,0,0,0.5)',
     },
   }));
+
+  const useStyles_filters = makeStyles((theme)=>({
+    root: {
+      minWidth: 240,
+      maxWidth: 240,
+      margin: theme.spacing.unit,
+      display:'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      
+    },
+    setMargin: {
+      margin: theme.spacing.unit,
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+    heading: {
+      color: theme.palette.primary.light,
+    }
+  }));
+  
+  export function SimpleCard() {
+    const classes = useStyles_filters();
+    const [genre, setGenre] = React.useState('');
+
+    const handleChange = (event) => {
+      setGenre(event.target.value);
+    };
+  
+    const [state, setState] = React.useState({
+      checked: false,
+    });
+  
+    const handleChange_checkbox = (event) => {
+      setState({ ...state, [event.target.name]: event.target.checked });
+    };
+    return (
+      <Card className={classes.root}>
+        <CardContent>
+          <p className={classes.heading}>FIND MOVIES BY:</p>
+        <FormControl>
+          <InputLabel htmlFor="movie-name">Movie Name</InputLabel>
+          <Input id="movie-name" type="text" />
+          <TextField
+          id="standard-select-genre"
+          select
+          label="Genres"
+          value={genre}
+          onChange={handleChange}
+          className={classes.setMargin}
+        >
+          {genres.map((option) => (
+            <FormGroup column>
+              <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.checked}
+                      onChange={handleChange_checkbox}
+                      name={"checked"+option.id}
+                      color="primary"
+                    />
+                  }
+                  label = {<MenuItem key={option.id} value={option.name}>
+                  {option.name}
+                </MenuItem>}
+                />
+              
+            </FormGroup>
+          ))}
+        </TextField>
+        <TextField
+          id="standard-select-artist"
+          select
+          label="Artists"
+          value={genre}
+          onChange={handleChange}
+          className={classes.setMargin}
+        >
+          {artists.map((option) => (
+            <FormGroup column>
+              <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.checked}
+                      onChange={handleChange_checkbox}
+                      name="checked"
+                      color="primary"
+                    />
+                  }
+                  label = {<MenuItem key={option.id} value={option.first_name + ' ' + option.last_name}>
+                  {option.first_name + ' ' + option.last_name}
+                </MenuItem>}
+                />
+              
+            </FormGroup>
+          ))}
+        </TextField>
+        <TextField id="release-date" type="date" label="Release Date Start" InputLabelProps={{ shrink: true }} className={classes.setMargin}/>
+        <TextField id="release-date" type="date" label="Release Date End" InputLabelProps={{ shrink: true }} className={classes.setMargin}/>
+        </FormControl>
+        </CardContent>
+        <CardActions>
+        <Button className="apply-btn" variant="contained" color="primary">
+          APPLY 
+        </Button> 
+        </CardActions>
+      </Card>
+    );
+  }
+  
+
+
 
 
 export function SingleLineGridList() {
@@ -108,7 +241,7 @@ class Home extends React.Component {
                 <TitlebarGridList/>
               </div>
               <div className="right">
-
+                <SimpleCard/>
               </div>
             </div>
         </>);
